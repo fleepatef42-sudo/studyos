@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="صفحة عرض الطلاب المسجلين في StudyOS مع قائمة منظمة وسريعة.">
+    <title>الطلاب المسجلون | StudyOS</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="page-body users-body" data-page="users">
+    <div class="site-backdrop" aria-hidden="true"></div>
+
+    <main class="page-shell users-shell">
+        <header class="users-header">
+            <div>
+                <a class="brand" href="index.html">
+                    <span class="brand__mark">S</span>
+                    <span class="brand__text">
+                        <strong>StudyOS</strong>
+                        <small>سجل الطلاب</small>
+                    </span>
+                </a>
+                <h1>الطلاب المسجلون</h1>
+                <p>صفحة منظمة لعرض بيانات الطلاب ومراجعة القائمة الحالية وتصديرها بسهولة.</p>
+            </div>
+
+            <div class="users-header__actions">
+                <button class="btn btn--primary" type="button" id="exportUsers">تصدير CSV</button>
+                <a class="btn btn--ghost" href="signup.html">إضافة طالب</a>
+                <a class="btn btn--light" href="home.html">لوحة الطالب</a>
+            </div>
+        </header>
+
+        <section class="users-summary">
+            <article class="stat-card">
+                <span>إجمالي الطلاب</span>
+                <strong id="usersTotal">0</strong>
+                <small>إجمالي الأعضاء الحاليين</small>
+            </article>
+            <article class="stat-card">
+                <span>عدد المسارات</span>
+                <strong id="usersTracks">0</strong>
+                <small>مسارات مختلفة</small>
+            </article>
+            <article class="stat-card">
+                <span>آخر تسجيل</span>
+                <strong id="usersLatest">-</strong>
+                <small>أحدث طالب مضاف</small>
+            </article>
+        </section>
+
+        <section class="content-card">
+            <div class="section-heading section-heading--compact">
+                <div>
+                    <span class="eyebrow">قائمة البيانات</span>
+                    <h2 class="section-title">عرض جاهز للتقديم أو المراجعة</h2>
+                </div>
+                <span class="helper-text" id="usersState">جاري تحميل البيانات...</span>
+            </div>
+
+            <div class="users-toolbar">
+                <label class="search-shell users-toolbar__search" for="usersSearch">
+                    <i data-lucide="search"></i>
+                    <input type="search" id="usersSearch" placeholder="ابحث بالاسم أو البريد أو المسار">
+                </label>
+
+                <label class="users-toolbar__filter" for="usersTrackFilter">
+                    <span>فلترة المسار</span>
+                    <select id="usersTrackFilter">
+                        <option value="all">كل المسارات</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="table-wrap">
+                <table class="users-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>الاسم</th>
+                            <th>البريد</th>
+                            <th>المسار</th>
+                            <th>الهدف الأسبوعي</th>
+                            <th>تاريخ الإضافة</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody"></tbody>
+                </table>
+            </div>
+
+            <div class="users-card-grid" id="usersCards"></div>
+
+            <div class="empty-card" id="usersEmpty" hidden>
+                <i data-lucide="folder-open"></i>
+                <h3>لا توجد بيانات بعد</h3>
+                <p>أنشئ حسابًا جديدًا من صفحة التسجيل وسيظهر هنا مباشرة ضمن القائمة.</p>
+                <a class="btn btn--primary" href="signup.html">إنشاء حساب جديد</a>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/users.js"></script>
+</body>
+</html>

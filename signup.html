@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="أنشئ حسابًا جديدًا في StudyOS وابدأ رحلتك التعليمية بواجهة عربية منظمة.">
+    <title>إنشاء حساب | StudyOS</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="page-body auth-body" data-page="signup">
+    <div class="site-backdrop" aria-hidden="true"></div>
+
+    <main class="page-shell auth-shell auth-shell--reverse">
+        <section class="auth-panel auth-spotlight">
+            <a class="brand brand--light" href="index.html">
+                <span class="brand__mark">S</span>
+                <span class="brand__text">
+                    <strong>StudyOS</strong>
+                    <small>واجهة تعليمية منظمة</small>
+                </span>
+            </a>
+
+            <div class="auth-spotlight__content">
+                <span class="eyebrow eyebrow--light">ابدأ منظمًا</span>
+                <h1>أنشئ حسابك وحدد مسارك وخطتك الأسبوعية من البداية.</h1>
+                <p>
+                    ابدأ حسابك وحدد مسارك من أول يوم، ثم انتقل مباشرة إلى لوحة الطالب لمتابعة المهام والأهداف.
+                </p>
+            </div>
+
+            <div class="auth-stats">
+                <article class="auth-stat">
+                    <strong>4 مسارات</strong>
+                    <span>يمكنك اختيار المسار الأقرب لك</span>
+                </article>
+                <article class="auth-stat">
+                    <strong>أهداف أسبوعية</strong>
+                    <span>اضبط معدل المذاكرة من البداية</span>
+                </article>
+                <article class="auth-stat">
+                    <strong>دخول فوري</strong>
+                    <span>بعد التسجيل تذهب مباشرة للوحة</span>
+                </article>
+            </div>
+        </section>
+
+        <section class="auth-panel auth-form-panel">
+            <div class="auth-form-panel__header">
+                <span class="eyebrow">إنشاء حساب</span>
+                <h2>ابدأ رحلتك التعليمية</h2>
+                <p>املأ البيانات التالية لنجهز لك مساحة متابعة مناسبة لأهدافك وخطتك الأسبوعية.</p>
+            </div>
+
+            <form class="auth-form" id="signupForm" novalidate>
+                <div class="form-group">
+                    <label class="form-label" for="fullName">الاسم الكامل</label>
+                    <input class="form-input" type="text" id="fullName" name="fullName" placeholder="أدخل اسمك الكامل" autocomplete="name" required>
+                    <span class="form-error" id="fullNameError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="email">البريد الإلكتروني</label>
+                    <input class="form-input" type="email" id="email" name="email" placeholder="student@example.com" autocomplete="email" required>
+                    <span class="form-error" id="emailError"></span>
+                </div>
+
+                <div class="field-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="studyTrack">المسار الدراسي</label>
+                        <select class="form-input" id="studyTrack" name="studyTrack" required>
+                            <option value="">اختر المسار</option>
+                            <option value="البرمجة">البرمجة</option>
+                            <option value="الثانوية العامة">الثانوية العامة</option>
+                            <option value="اللغات">اللغات</option>
+                            <option value="التطوير الذاتي">التطوير الذاتي</option>
+                        </select>
+                        <span class="form-error" id="studyTrackError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="weeklyGoal">هدفك الأسبوعي</label>
+                        <select class="form-input" id="weeklyGoal" name="weeklyGoal" required>
+                            <option value="">عدد ساعات المذاكرة</option>
+                            <option value="4 ساعات">4 ساعات</option>
+                            <option value="8 ساعات">8 ساعات</option>
+                            <option value="12 ساعة">12 ساعة</option>
+                            <option value="16 ساعة">16 ساعة</option>
+                        </select>
+                        <span class="form-error" id="weeklyGoalError"></span>
+                    </div>
+                </div>
+
+                <div class="field-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="password">كلمة المرور</label>
+                        <div class="password-row">
+                            <input class="form-input" type="password" id="password" name="password" placeholder="8 أحرف على الأقل" autocomplete="new-password" required>
+                            <button class="toggle-button" type="button" id="passwordToggle">إظهار</button>
+                        </div>
+                        <span class="form-error" id="passwordError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="confirmPassword">تأكيد كلمة المرور</label>
+                        <div class="password-row">
+                            <input class="form-input" type="password" id="confirmPassword" name="confirmPassword" placeholder="أعد كتابة كلمة المرور" autocomplete="new-password" required>
+                            <button class="toggle-button" type="button" id="confirmPasswordToggle">إظهار</button>
+                        </div>
+                        <span class="form-error" id="confirmPasswordError"></span>
+                    </div>
+                </div>
+
+                <div class="checkbox-row checkbox-row--stack">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="terms" name="terms" required>
+                        <span>أوافق على سياسة الاستخدام والخصوصية الخاصة بالمنصة.</span>
+                    </label>
+                    <span class="form-error" id="termsError"></span>
+                </div>
+
+                <p class="form-note" id="signupNotice">
+                    بعد إنشاء الحساب ستنتقل مباشرة إلى لوحة الطالب لتبدأ ترتيب يومك الدراسي.
+                </p>
+
+                <button class="btn btn--primary btn--block" type="submit" id="signupSubmit">
+                    <span>إنشاء الحساب</span>
+                </button>
+            </form>
+
+            <section class="success-panel" id="successMessage" hidden>
+                <i data-lucide="party-popper"></i>
+                <h3>تم إنشاء الحساب</h3>
+                <p>جهزنا لك لوحة الطالب وسيتم تحويلك إليها خلال ثوانٍ.</p>
+            </section>
+
+            <div class="auth-footer">
+                <span>لديك حساب بالفعل؟</span>
+                <a href="login.html">سجل دخولك</a>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/signup.js"></script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="تسجيل الدخول إلى StudyOS بواجهة عربية منظمة وسهلة للطلاب.">
+    <title>تسجيل الدخول | StudyOS</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="page-body auth-body" data-page="login">
+    <div class="site-backdrop" aria-hidden="true"></div>
+
+    <main class="page-shell auth-shell">
+        <section class="auth-panel auth-spotlight">
+            <a class="brand brand--light" href="index.html">
+                <span class="brand__mark">S</span>
+                <span class="brand__text">
+                    <strong>StudyOS</strong>
+                    <small>واجهة تعليمية منظمة</small>
+                </span>
+            </a>
+
+            <div class="auth-spotlight__content">
+                <span class="eyebrow eyebrow--light">عودة منظمة للدراسة</span>
+                <h1>سجّل دخولك وارجع مباشرة إلى خطتك اليومية.</h1>
+                <p>
+                    دخول سريع، تجربة منظمة، ولوحة طالب جاهزة لتكمل منها خطة اليوم من غير تشتيت.
+                </p>
+            </div>
+
+            <div class="auth-stats">
+                <article class="auth-stat">
+                    <strong>واجهة أسرع</strong>
+                    <span>تنقل سريع وتجربة استخدام مريحة</span>
+                </article>
+                <article class="auth-stat">
+                    <strong>تنظيم أعلى</strong>
+                    <span>خطة يومية ومهام قابلة للتحديث</span>
+                </article>
+                <article class="auth-stat">
+                    <strong>تجربة عربية</strong>
+                    <span>تصميم RTL كامل ومتجاوب</span>
+                </article>
+            </div>
+        </section>
+
+        <section class="auth-panel auth-form-panel">
+            <div class="auth-form-panel__header">
+                <span class="eyebrow">تسجيل الدخول</span>
+                <h2>مرحبًا بعودتك</h2>
+                <p>استخدم بريدك للدخول إلى لوحة الطالب أو لتجربة الواجهة مباشرة.</p>
+            </div>
+
+            <form class="auth-form" id="loginForm" novalidate>
+                <div class="form-group">
+                    <label class="form-label" for="email">البريد الإلكتروني</label>
+                    <input class="form-input" type="email" id="email" name="email" placeholder="student@example.com" autocomplete="email" required>
+                    <span class="form-error" id="emailError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">كلمة المرور</label>
+                    <div class="password-row">
+                        <input class="form-input" type="password" id="password" name="password" placeholder="6 أحرف على الأقل" autocomplete="current-password" required>
+                        <button class="toggle-button" type="button" id="passwordToggle">إظهار</button>
+                    </div>
+                    <span class="form-error" id="passwordError"></span>
+                </div>
+
+                <div class="checkbox-row">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="rememberMe" name="rememberMe">
+                        <span>تذكّر البريد على هذا الجهاز</span>
+                    </label>
+                    <button class="link-button" type="button" id="forgotPassword">نسيت كلمة المرور؟</button>
+                </div>
+
+                <p class="form-note" id="loginNotice">
+                    استخدم آخر بريد دخلت به لتعود بسرعة إلى خطة اليوم ولوحة المتابعة.
+                </p>
+
+                <button class="btn btn--primary btn--block" type="submit" id="loginSubmit">
+                    <span>الدخول إلى لوحة الطالب</span>
+                </button>
+            </form>
+
+            <section class="success-panel" id="successMessage" hidden>
+                <i data-lucide="badge-check"></i>
+                <h3>تم تسجيل الدخول بنجاح</h3>
+                <p>سيتم نقلك إلى لوحة الطالب خلال لحظات.</p>
+            </section>
+
+            <div class="auth-footer">
+                <span>ليس لديك حساب بعد؟</span>
+                <a href="signup.html">أنشئ حسابًا جديدًا</a>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/login.js"></script>
+</body>
+</html>

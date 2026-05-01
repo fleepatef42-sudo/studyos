@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="لوحة الطالب في StudyOS لمتابعة المهام، جلسات التركيز، والمسارات المقترحة.">
+    <title>لوحة الطالب | StudyOS</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="page-body dashboard-body" data-page="dashboard">
+    <div class="site-backdrop site-backdrop--dashboard" aria-hidden="true"></div>
+    <div class="page-overlay" id="pageOverlay" hidden></div>
+
+    <div class="dashboard-frame">
+        <aside class="dashboard-sidebar" id="dashboardSidebar">
+            <div class="dashboard-sidebar__top">
+                <a class="brand" href="index.html">
+                    <span class="brand__mark">S</span>
+                    <span class="brand__text">
+                        <strong>StudyOS</strong>
+                        <small>لوحة الطالب</small>
+                    </span>
+                </a>
+
+                <button class="icon-button icon-button--ghost sidebar-close" type="button" id="sidebarClose" aria-label="إغلاق القائمة">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav" aria-label="التنقل داخل لوحة الطالب">
+                <a class="sidebar-link is-active" href="#overview">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span>النظرة العامة</span>
+                </a>
+                <a class="sidebar-link" href="#plan">
+                    <i data-lucide="list-checks"></i>
+                    <span>مهام اليوم</span>
+                </a>
+                <a class="sidebar-link" href="#courses">
+                    <i data-lucide="book-open-text"></i>
+                    <span>المسارات</span>
+                </a>
+                <a class="sidebar-link" href="#focus">
+                    <i data-lucide="timer-reset"></i>
+                    <span>وضع التركيز</span>
+                </a>
+                <a class="sidebar-link" href="resources.html">
+                    <i data-lucide="shopping-bag"></i>
+                    <span>مكتبة الموارد</span>
+                </a>
+                <a class="sidebar-link" href="users.html">
+                    <i data-lucide="users-round"></i>
+                    <span>الطلاب المسجلون</span>
+                </a>
+            </nav>
+
+            <div class="profile-card">
+                <div class="profile-card__avatar">
+                    <span data-user-initial>A</span>
+                </div>
+                <div>
+                    <strong data-user-name>أحمد محمد</strong>
+                    <span data-user-track>البرمجة</span>
+                </div>
+            </div>
+        </aside>
+
+        <main class="dashboard-main">
+            <header class="dashboard-topbar">
+                <div class="dashboard-topbar__left">
+                    <button class="icon-button icon-button--ghost sidebar-open" type="button" id="sidebarToggle" aria-label="فتح القائمة">
+                        <i data-lucide="menu"></i>
+                    </button>
+
+                    <label class="search-shell" for="courseSearch">
+                        <i data-lucide="search"></i>
+                        <input type="search" id="courseSearch" placeholder="ابحث داخل المسارات أو الأدوات">
+                    </label>
+                </div>
+
+                <div class="dashboard-topbar__actions">
+                    <span class="pill" id="liveClock">--:--</span>
+                    <a class="btn btn--ghost" href="index.html">الصفحة الرئيسية</a>
+                </div>
+            </header>
+
+            <section class="hero-banner" id="overview">
+                <div class="hero-banner__copy">
+                    <span class="eyebrow">لوحة الطالب اليومية</span>
+                    <h1>أهلًا <span data-user-firstname>أحمد</span>، يومك الدراسي مرتب وواضح.</h1>
+                    <p>
+                        هنا تجد تقدمك، مهامك الحالية، جلسة تركيز جاهزة، وروابط سريعة لأهم أقسام المنصة في واجهة واحدة.
+                    </p>
+
+                    <div class="hero-banner__actions">
+                        <a class="btn btn--primary" href="#focus">ابدأ جلسة تركيز</a>
+                        <a class="btn btn--light" href="resources.html">افتح مكتبة الموارد</a>
+                    </div>
+                </div>
+
+                <div class="hero-banner__panel">
+                    <div class="metric-badge">
+                        <span>الهدف الأسبوعي</span>
+                        <strong data-user-goal>8 ساعات</strong>
+                    </div>
+                    <div class="metric-badge">
+                        <span>نسبة الإنجاز</span>
+                        <strong id="progressLabel">0%</strong>
+                    </div>
+                    <div class="metric-badge">
+                        <span>إجمالي الأعضاء</span>
+                        <strong id="registeredUsersMetric">0</strong>
+                    </div>
+                </div>
+            </section>
+
+            <section class="stat-grid">
+                <article class="stat-card">
+                    <span>المهام المكتملة</span>
+                    <strong id="completedTasksCount">0</strong>
+                    <small>من قائمة اليوم</small>
+                </article>
+                <article class="stat-card">
+                    <span>المهام المتبقية</span>
+                    <strong id="remainingTasksCount">0</strong>
+                    <small>للوصول لهدف اليوم</small>
+                </article>
+                <article class="stat-card">
+                    <span>جلسات التركيز</span>
+                    <strong id="focusSessionsCount">0</strong>
+                    <small>مكتملة هذا الأسبوع</small>
+                </article>
+                <article class="stat-card">
+                    <span>سلسلة الالتزام</span>
+                    <strong id="focusStreakCount">0</strong>
+                    <small>أيام متتابعة</small>
+                </article>
+            </section>
+
+            <section class="dashboard-grid dashboard-grid--insights">
+                <article class="content-card content-card--wide">
+                    <div class="section-heading section-heading--compact">
+                        <div>
+                            <span class="eyebrow">إيقاع الأسبوع</span>
+                            <h2 class="section-title">لوحة أداء أقوى</h2>
+                        </div>
+                        <span class="helper-text" id="momentumState">تتحدث بحسب مهامك وجلساتك</span>
+                    </div>
+
+                    <div class="momentum-layout">
+                        <div class="momentum-chart" id="momentumChart">
+                            <article class="bar-column" data-momentum-bar="0">
+                                <span class="bar-column__track"><span class="bar-column__fill"></span></span>
+                                <strong>س</strong>
+                                <small>0%</small>
+                            </article>
+                            <article class="bar-column" data-momentum-bar="1">
+                                <span class="bar-column__track"><span class="bar-column__fill"></span></span>
+                                <strong>ح</strong>
+                                <small>0%</small>
+                            </article>
+                            <article class="bar-column" data-momentum-bar="2">
+                                <span class="bar-column__track"><span class="bar-column__fill"></span></span>
+                                <strong>ن</strong>
+                                <small>0%</small>
+                            </article>
+                            <article class="bar-column" data-momentum-bar="3">
+                                <span class="bar-column__track"><span class="bar-column__fill"></span></span>
+                                <strong>ث</strong>
+                                <small>0%</small>
+                            </article>
+                            <article class="bar-column" data-momentum-bar="4">
+                                <span class="bar-column__track"><span class="bar-column__fill"></span></span>
+                                <strong>ر</strong>
+                                <small>0%</small>
+                            </article>
+                            <article class="bar-column" data-momentum-bar="5">
+                                <span class="bar-column__track"><span class="bar-column__fill"></span></span>
+                                <strong>خ</strong>
+                                <small>0%</small>
+                            </article>
+                            <article class="bar-column" data-momentum-bar="6">
+                                <span class="bar-column__track"><span class="bar-column__fill"></span></span>
+                                <strong>ج</strong>
+                                <small>0%</small>
+                            </article>
+                        </div>
+
+                        <div class="momentum-side">
+                            <div class="spot-stat">
+                                <span>أفضل يوم</span>
+                                <strong id="bestDayValue">الخميس</strong>
+                            </div>
+                            <div class="spot-stat">
+                                <span>إجمالي ساعات تقديرية</span>
+                                <strong id="weeklyHoursValue">0</strong>
+                            </div>
+                            <div class="achievement-list">
+                                <div class="achievement-pill">
+                                    <i data-lucide="flame"></i>
+                                    <span>كل جلسة تركيز ترفع المؤشر العام</span>
+                                </div>
+                                <div class="achievement-pill">
+                                    <i data-lucide="check-check"></i>
+                                    <span>إنجاز المهام ينعكس فورًا على اللوحة</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="content-card notes-box">
+                    <div class="section-heading section-heading--compact">
+                        <div>
+                            <span class="eyebrow">إضافات سريعة</span>
+                            <h2 class="section-title">ملاحظتك اليومية</h2>
+                        </div>
+                    </div>
+
+                    <textarea id="dailyNote" placeholder="اكتب أهم فكرة أو واجب تريد ألا تنساه اليوم..."></textarea>
+                    <p class="helper-text" id="dailyNoteState">يتم حفظ الملاحظة تلقائيًا.</p>
+
+                    <div class="theme-picker">
+                        <button class="theme-chip is-active" type="button" data-dashboard-theme="teal">متوازن</button>
+                        <button class="theme-chip" type="button" data-dashboard-theme="sunset">غروب</button>
+                        <button class="theme-chip" type="button" data-dashboard-theme="ocean">بحري</button>
+                    </div>
+                </article>
+            </section>
+
+            <section class="dashboard-grid">
+                <article class="content-card content-card--wide" id="plan">
+                    <div class="section-heading section-heading--compact">
+                        <div>
+                            <span class="eyebrow">خطة اليوم</span>
+                            <h2 class="section-title">مهامك الحالية</h2>
+                        </div>
+                        <span class="helper-text">حدّثها أولًا بأول وراقب نسبة الإنجاز</span>
+                    </div>
+
+                    <div class="progress-shell">
+                        <div class="progress-track">
+                            <span class="progress-fill" id="taskProgressBar"></span>
+                        </div>
+                    </div>
+
+                    <div class="task-board" id="taskList">
+                        <label class="task-item">
+                            <input type="checkbox" data-task-id="task-1">
+                            <span class="task-item__copy">
+                                <strong>مراجعة أساسيات JavaScript</strong>
+                                <small>30 دقيقة مراجعة + 10 دقائق تلخيص</small>
+                            </span>
+                        </label>
+                        <label class="task-item">
+                            <input type="checkbox" data-task-id="task-2" checked>
+                            <span class="task-item__copy">
+                                <strong>حل اختبار رياضيات قصير</strong>
+                                <small>20 سؤالًا مع تصحيح ذاتي سريع</small>
+                            </span>
+                        </label>
+                        <label class="task-item">
+                            <input type="checkbox" data-task-id="task-3">
+                            <span class="task-item__copy">
+                                <strong>مشاهدة درس الخوارزميات</strong>
+                                <small>درس واحد ثم بطاقة ملاحظات</small>
+                            </span>
+                        </label>
+                        <label class="task-item">
+                            <input type="checkbox" data-task-id="task-4">
+                            <span class="task-item__copy">
+                                <strong>إرسال الواجب النهائي</strong>
+                                <small>رفع الملف قبل الساعة 8 مساءً</small>
+                            </span>
+                        </label>
+                    </div>
+                </article>
+
+                <article class="content-card" id="schedule">
+                    <div class="section-heading section-heading--compact">
+                        <div>
+                            <span class="eyebrow">جدولك</span>
+                            <h2 class="section-title">المحطات القادمة</h2>
+                        </div>
+                    </div>
+
+                    <div class="agenda-list">
+                        <div class="agenda-item">
+                            <strong>09:30 ص</strong>
+                            <div>
+                                <h3>مراجعة سريعة</h3>
+                                <p>ملاحظات الوحدة الثالثة</p>
+                            </div>
+                        </div>
+                        <div class="agenda-item">
+                            <strong>12:00 م</strong>
+                            <div>
+                                <h3>جلسة حل مسائل</h3>
+                                <p>تمارين برمجة أو أسئلة حساب</p>
+                            </div>
+                        </div>
+                        <div class="agenda-item">
+                            <strong>07:00 م</strong>
+                            <div>
+                                <h3>اختبار ذاتي قصير</h3>
+                                <p>15 دقيقة تقييم سريع</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="content-card content-card--wide" id="courses">
+                    <div class="section-heading section-heading--compact">
+                        <div>
+                            <span class="eyebrow">اقتراحات اليوم</span>
+                            <h2 class="section-title">مسارات وأدوات مناسبة لك</h2>
+                        </div>
+                        <a class="link-inline" href="resources.html">المزيد من الموارد</a>
+                    </div>
+
+                    <div class="course-list" id="courseList">
+                        <article class="course-card" data-course-card data-course-name="البرمجة بايثون">
+                            <div class="course-card__top">
+                                <span class="pill pill--accent">البرمجة</span>
+                                <span>6 وحدات</span>
+                            </div>
+                            <h3>البرمجة بايثون من الصفر</h3>
+                            <p>مسار مناسب لبناء أساس قوي مع تمارين عملية خفيفة يوميًا.</p>
+                        </article>
+
+                        <article class="course-card" data-course-card data-course-name="الرياضيات التطبيقية">
+                            <div class="course-card__top">
+                                <span class="pill">الثانوية العامة</span>
+                                <span>12 اختبارًا</span>
+                            </div>
+                            <h3>مراجعة الرياضيات التطبيقية</h3>
+                            <p>ترتيب وحدات المراجعة مع جلسات حل قصيرة واختبارات قياس أداء.</p>
+                        </article>
+
+                        <article class="course-card" data-course-card data-course-name="اللغة الإنجليزية العملية">
+                            <div class="course-card__top">
+                                <span class="pill">اللغات</span>
+                                <span>4 أسابيع</span>
+                            </div>
+                            <h3>اللغة الإنجليزية العملية</h3>
+                            <p>خطة يومية خفيفة للمفردات والاستماع والتطبيق في مواقف حياتية.</p>
+                        </article>
+                    </div>
+                </article>
+
+                <article class="content-card" id="focus">
+                    <div class="section-heading section-heading--compact">
+                        <div>
+                            <span class="eyebrow">جلسة تركيز</span>
+                            <h2 class="section-title">وضع التركيز</h2>
+                        </div>
+                    </div>
+
+                    <div class="focus-card">
+                        <div class="focus-card__time" id="focusTimer">25:00</div>
+                        <p class="focus-card__state" id="focusState">جاهز للبدء</p>
+                        <div class="focus-card__actions">
+                            <button class="btn btn--primary" type="button" id="focusStart">ابدأ</button>
+                            <button class="btn btn--ghost" type="button" id="focusReset">إعادة ضبط</button>
+                        </div>
+                    </div>
+                </article>
+            </section>
+        </main>
+
+        <aside class="dashboard-panel">
+            <section class="content-card">
+                <div class="section-heading section-heading--compact">
+                    <div>
+                        <span class="eyebrow">دليل اليوم</span>
+                        <h2 class="section-title">خطوات سريعة</h2>
+                    </div>
+                </div>
+
+                <div class="bullet-stack">
+                    <div class="bullet-line">
+                        <i data-lucide="flag"></i>
+                        <span>ابدأ بالمهمة الأصعب أولًا ثم انتقل إلى المهمات الأسرع.</span>
+                    </div>
+                    <div class="bullet-line">
+                        <i data-lucide="clock-3"></i>
+                        <span>خصص 25 دقيقة تركيز ثم خذ 5 دقائق راحة قصيرة.</span>
+                    </div>
+                    <div class="bullet-line">
+                        <i data-lucide="notebook-pen"></i>
+                        <span>دوّن أهم نقطة وصلت لها قبل إنهاء جلستك الحالية.</span>
+                    </div>
+                </div>
+
+                <div class="chip-row">
+                    <span class="pill">ابدأ بالأولوية</span>
+                    <span class="pill">راجع المختصرات</span>
+                    <span class="pill">أغلق المشتتات</span>
+                </div>
+            </section>
+
+            <section class="content-card">
+                <div class="section-heading section-heading--compact">
+                    <div>
+                            <span class="eyebrow">ملخص سريع</span>
+                            <h2 class="section-title">مميزات اليوم</h2>
+                    </div>
+                </div>
+
+                <div class="bullet-stack">
+                    <div class="bullet-line">
+                        <i data-lucide="badge-check"></i>
+                        <span>جلسة تركيز جاهزة خلال ثوانٍ</span>
+                    </div>
+                    <div class="bullet-line">
+                        <i data-lucide="badge-check"></i>
+                        <span>متابعة واضحة للمهام والملاحظات</span>
+                    </div>
+                    <div class="bullet-line">
+                        <i data-lucide="badge-check"></i>
+                        <span>وصول سريع إلى الموارد والمسارات</span>
+                    </div>
+                </div>
+            </section>
+        </aside>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

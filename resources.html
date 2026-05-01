@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="مكتبة موارد StudyOS التعليمية مع فلاتر سريعة وتوصيات بحسب المسار الدراسي.">
+    <title>مكتبة الموارد | StudyOS</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="page-body resources-body" data-page="resources">
+    <div class="site-backdrop" aria-hidden="true"></div>
+
+    <main class="page-shell resources-shell">
+        <header class="users-header resources-header">
+            <div>
+                <a class="brand" href="index.html">
+                    <span class="brand__mark">S</span>
+                    <span class="brand__text">
+                        <strong>StudyOS</strong>
+                        <small>مكتبة الموارد</small>
+                    </span>
+                </a>
+                <h1>مكتبة موارد StudyOS</h1>
+                <p>صفحة مستقلة داخل المشروع تجمع المسارات التعليمية، الأدوات، والمواد المقترحة بشكل أوضح من الربط القديم.</p>
+            </div>
+
+            <div class="users-header__actions">
+                <a class="btn btn--ghost" href="home.html">لوحة الطالب</a>
+                <a class="btn btn--light" href="signup.html">إنشاء حساب</a>
+            </div>
+        </header>
+
+        <section class="content-card resources-hero">
+            <div class="resources-hero__copy">
+                <span class="eyebrow">مركز الموارد</span>
+                <h2 class="section-title">موارد مناسبة للمسار الذي تذاكر فيه الآن.</h2>
+                <p class="section-copy">
+                    اختر فئة معينة، ابحث بسرعة، واحفظ الموارد التي تريد الرجوع لها من داخل حسابك على نفس الجهاز.
+                </p>
+            </div>
+
+            <div class="resources-stats">
+                <article class="stat-card">
+                    <span>مسارك الحالي</span>
+                    <strong id="currentTrackValue">المسار العام</strong>
+                    <small>يتم قراءته من حسابك الحالي</small>
+                </article>
+                <article class="stat-card">
+                    <span>المحفوظات</span>
+                    <strong id="favoritesCount">0</strong>
+                    <small>موارد قمت بحفظها</small>
+                </article>
+                <article class="stat-card">
+                    <span>الفئات</span>
+                    <strong>4</strong>
+                    <small>برمجة، ثانوي، لغات، إنتاجية</small>
+                </article>
+            </div>
+        </section>
+
+        <section class="content-card">
+            <div class="section-heading section-heading--compact">
+                <div>
+                    <span class="eyebrow">تصفح سريع</span>
+                    <h2 class="section-title">النتائج المقترحة لك</h2>
+                </div>
+                <button class="btn btn--ghost" type="button" id="favoritesOnly">المحفوظات فقط</button>
+            </div>
+
+            <div class="resources-toolbar">
+                <label class="search-shell resources-toolbar__search" for="resourcesSearch">
+                    <i data-lucide="search"></i>
+                    <input id="resourcesSearch" type="search" placeholder="ابحث عن مسار أو مورد أو فكرة...">
+                </label>
+
+                <div class="resources-filters" id="resourcesFilters">
+                    <button class="resource-filter is-active" type="button" data-resource-filter="الكل">الكل</button>
+                    <button class="resource-filter" type="button" data-resource-filter="البرمجة">البرمجة</button>
+                    <button class="resource-filter" type="button" data-resource-filter="الثانوية العامة">الثانوية العامة</button>
+                    <button class="resource-filter" type="button" data-resource-filter="اللغات">اللغات</button>
+                    <button class="resource-filter" type="button" data-resource-filter="الإنتاجية">الإنتاجية</button>
+                </div>
+            </div>
+
+            <p class="helper-text resources-state" id="resourcesState">جارٍ تجهيز الموارد...</p>
+            <div class="resources-grid" id="resourcesGrid"></div>
+        </section>
+    </main>
+
+    <script src="js/resources.js"></script>
+</body>
+</html>
