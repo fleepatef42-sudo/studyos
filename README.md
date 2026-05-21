@@ -2,7 +2,7 @@
 
 Arabic-first educational workspace for students who need a focused place to plan study sessions, manage resources, and track progress.
 
-## Live Demo
+## Live Site
 
 - Live: https://fleepatef42-sudo.github.io/studyos/
 - Source: https://github.com/fleepatef42-sudo/studyos
@@ -13,7 +13,7 @@ Arabic-first educational workspace for students who need a focused place to plan
 - Form validation for account creation and login.
 - Password hashing through the browser Crypto API when available.
 - Study planning widgets, daily notes, progress counters, and resource favorites.
-- LocalStorage persistence for demo users, current user data, resources, and study progress.
+- LocalStorage persistence for users, current user data, resources, and study progress.
 - RTL Arabic interface with responsive layouts.
 
 ## Tech Stack
@@ -26,4 +26,4 @@ Arabic-first educational workspace for students who need a focused place to plan
 
 ## Project Note
 
-This is a front-end demo. Authentication and data storage run in the browser for portfolio presentation, not as a production backend.
+This portfolio version stores authentication and study data in the browser.

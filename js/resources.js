@@ -35,7 +35,7 @@ const RESOURCE_ITEMS = [
         id: "study-planner",
         title: "نظام تخطيط أسبوعي للطباعة",
         category: "الإنتاجية",
-        level: "جاهز للاستخدام",
+        level: "متاح للاستخدام",
         duration: "ملف PDF",
         description: "قالب منظم لتوزيع المهام وتتبع جلسات التركيز والمراجعة.",
         accent: "#7c3aed",

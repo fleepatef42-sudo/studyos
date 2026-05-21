@@ -423,7 +423,7 @@ function setupFocusTimer(user, state, onUpdate) {
     resetButton.addEventListener("click", () => {
         stopTimer();
         timeLeft = 25 * 60;
-        stateNode.textContent = "جاهز للبدء";
+        stateNode.textContent = "اضغط لبدء الجلسة";
         startButton.textContent = "ابدأ";
         renderTime();
     });
