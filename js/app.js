@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     syncYears();
     initLandingPage();
     initDashboardPage();
+    setupBackToTop();
 });
 
 function readStorage(key, fallback) {
@@ -73,6 +74,24 @@ function syncYears() {
     document.querySelectorAll("[data-current-year]").forEach((node) => {
         node.textContent = String(new Date().getFullYear());
     });
+}
+
+function setupBackToTop() {
+    const button = document.querySelector("[data-back-to-top]");
+    if (!button) {
+        return;
+    }
+
+    const syncVisibility = () => {
+        button.classList.toggle("is-visible", window.scrollY > 420);
+    };
+
+    button.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    window.addEventListener("scroll", syncVisibility, { passive: true });
+    syncVisibility();
 }
 
 function initLandingPage() {
