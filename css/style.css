@@ -2265,3 +2265,80 @@ body[data-dashboard-theme="ocean"] {
         bottom: 16px;
     }
 }
+
+/* Compact sticky/fixed bars for small, large, and XL screens */
+@media (max-width: 640px) {
+    .landing-header {
+        padding: 8px 0;
+    }
+
+    .landing-header__inner,
+    .dashboard-topbar,
+    .users-header {
+        gap: 10px;
+    }
+
+    .brand__mark,
+    .profile-card__avatar {
+        width: 42px;
+        height: 42px;
+        border-radius: 14px;
+    }
+
+    .nav-actions .btn,
+    .dashboard-topbar__actions .btn,
+    .users-header__actions .btn {
+        min-height: 38px;
+        padding-block: 9px;
+    }
+
+    .dashboard-sidebar {
+        width: min(278px, calc(100vw - 32px));
+        padding: 16px;
+        gap: 18px;
+    }
+
+    .sidebar-link {
+        padding: 11px 13px;
+    }
+}
+
+@media (min-width: 1024px) and (max-width: 1439px) {
+    .landing-header {
+        padding: 12px 0;
+    }
+
+    .dashboard-frame {
+        grid-template-columns: 248px minmax(0, 1fr) 286px;
+    }
+
+    .dashboard-sidebar,
+    .dashboard-panel {
+        padding: 16px;
+        border-radius: 26px;
+    }
+
+    .sidebar-link {
+        padding: 12px 14px;
+    }
+
+    .dashboard-topbar,
+    .users-header {
+        margin-bottom: 14px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .landing-header {
+        padding: 12px 0;
+    }
+
+    .dashboard-frame {
+        grid-template-columns: 260px minmax(0, 1fr) 300px;
+    }
+
+    .dashboard-sidebar,
+    .dashboard-panel {
+        padding: 18px;
+    }
+}
