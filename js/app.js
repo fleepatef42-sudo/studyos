@@ -2,6 +2,7 @@ const STUDY_OS_KEYS = {
     users: "studyos.users",
     currentUser: "studyos.currentUser",
     dashboardTasks: "studyos.dashboardTasks",
+    dashboardTaskDetails: "studyos.dashboardTaskDetails",
     focusStats: "studyos.focusStats",
     focusHistory: "studyos.focusHistory",
     dailyNote: "studyos.dailyNote",
@@ -104,7 +105,136 @@ function initLandingPage() {
         animateCounter(counter, target);
     });
 
+    setupLandingPlanner();
     setupFaqAccordion();
+}
+
+function setupLandingPlanner() {
+    const form = document.getElementById("studyPlannerForm");
+    const subjectInput = document.getElementById("plannerSubject");
+    const durationInput = document.getElementById("plannerDuration");
+    const priorityInput = document.getElementById("plannerPriority");
+    const noteInput = document.getElementById("plannerNote");
+    const preview = document.getElementById("plannerPreview");
+    const totalTimeNode = document.getElementById("plannerTotalTime");
+    const stateNode = document.getElementById("plannerState");
+
+    if (!form || !subjectInput || !durationInput || !priorityInput || !noteInput || !preview || !totalTimeNode) {
+        return;
+    }
+
+    const users = readStorage(STUDY_OS_KEYS.users, []);
+    const currentUser = getCurrentUser(users);
+
+    const renderPreview = () => {
+        const tasks = buildPlannerTasks({
+            subject: subjectInput.value,
+            duration: durationInput.value,
+            priority: priorityInput.value,
+            note: noteInput.value,
+        });
+
+        const totalMinutes = tasks.reduce((total, task) => total + Number(task.minutes || 0), 0);
+        totalTimeNode.textContent = `${formatCounterValue(totalMinutes)} دقيقة`;
+        preview.innerHTML = tasks
+            .map((task) => `
+                <div class="preview-task">
+                    <i data-lucide="${task.icon}"></i>
+                    <div>
+                        <strong>${escapeHtml(task.title)}</strong>
+                        <span>${escapeHtml(task.subtitle)}</span>
+                    </div>
+                </div>
+            `)
+            .join("");
+
+        refreshIcons();
+        return tasks;
+    };
+
+    [subjectInput, durationInput, priorityInput, noteInput].forEach((input) => {
+        const handlePlannerChange = () => {
+            renderPreview();
+            if (stateNode) {
+                stateNode.textContent = "المعاينة جاهزة. احفظها عندما تناسبك.";
+            }
+        };
+
+        input.addEventListener("input", handlePlannerChange);
+        input.addEventListener("change", handlePlannerChange);
+    });
+
+    form.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const tasks = renderPreview();
+        const taskState = tasks.reduce((state, task) => {
+            state[task.id] = false;
+            return state;
+        }, {});
+
+        writeUserScopedStorage(STUDY_OS_KEYS.dashboardTaskDetails, currentUser, tasks);
+        writeUserScopedStorage(STUDY_OS_KEYS.dashboardTasks, currentUser, taskState);
+        writeUserScopedStorage(STUDY_OS_KEYS.dailyNote, currentUser, {
+            content: noteInput.value.trim(),
+            updatedAt: new Date().toISOString(),
+        });
+
+        if (stateNode) {
+            stateNode.textContent = "تم حفظ الخطة. افتح لوحة الطالب وستجدها في مهام اليوم.";
+        }
+    });
+
+    renderPreview();
+}
+
+function buildPlannerTasks({ subject, duration, priority, note }) {
+    const safeSubject = subject.trim() || "مذاكرة اليوم";
+    const minutes = Number(duration || 25);
+    const warmup = Math.max(10, Math.round(minutes * 0.2));
+    const focus = Math.max(15, Math.round(minutes * 0.55));
+    const review = Math.max(10, minutes - warmup - focus);
+    const safeNote = note.trim() || "اكتب أهم نقطة خرجت بها";
+
+    return [
+        {
+            id: "task-1",
+            icon: "target",
+            title: `تحديد هدف ${safeSubject}`,
+            subtitle: `${warmup} دقيقة لفهم المطلوب وترتيب المصادر`,
+            minutes: warmup,
+        },
+        {
+            id: "task-2",
+            icon: "timer-reset",
+            title: `جلسة تركيز في ${safeSubject}`,
+            subtitle: `${focus} دقيقة مرتبطة بسبب: ${priority}`,
+            minutes: focus,
+        },
+        {
+            id: "task-3",
+            icon: "notebook-pen",
+            title: `تلخيص ${safeSubject}`,
+            subtitle: `${review} دقيقة لكتابة ملخص قابل للمراجعة`,
+            minutes: review,
+        },
+        {
+            id: "task-4",
+            icon: "check-check",
+            title: "مراجعة نهائية قصيرة",
+            subtitle: safeNote,
+            minutes: 10,
+        },
+    ];
+}
+
+function escapeHtml(value) {
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
 
 function animateCounter(node, target) {
@@ -317,6 +447,8 @@ function setupTasks(user, state, onUpdate) {
     }
 
     const savedState = readUserScopedStorage(STUDY_OS_KEYS.dashboardTasks, user, {});
+    const savedDetails = readUserScopedStorage(STUDY_OS_KEYS.dashboardTaskDetails, user, []);
+    applyStoredTaskDetails(savedDetails);
 
     taskInputs.forEach((input) => {
         const taskId = input.dataset.taskId;
@@ -360,6 +492,27 @@ function setupTasks(user, state, onUpdate) {
     }
 
     syncTasks();
+}
+
+function applyStoredTaskDetails(tasks) {
+    if (!Array.isArray(tasks) || !tasks.length) {
+        return;
+    }
+
+    tasks.forEach((task) => {
+        const input = document.querySelector(`[data-task-id="${task.id}"]`);
+        const item = input?.closest(".task-item");
+        const titleNode = item?.querySelector("strong");
+        const subtitleNode = item?.querySelector("small");
+
+        if (titleNode && task.title) {
+            titleNode.textContent = task.title;
+        }
+
+        if (subtitleNode && task.subtitle) {
+            subtitleNode.textContent = task.subtitle;
+        }
+    });
 }
 
 function setupFocusTimer(user, state, onUpdate) {
